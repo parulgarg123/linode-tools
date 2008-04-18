@@ -1,10 +1,11 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require 'rexml/document'
 require 'open-uri'
 
 class LinodeInfo
-  attr_reader :user, :user_agent, :xml
+  attr_reader :xml
+  attr_accessor :user, :user_agent
 
   @@base_url  = "http://www.linode.com/members/info/"
   @@date_fmt = "%Y-%m-%d %H:%M"
@@ -21,6 +22,7 @@ class LinodeInfo
     fetch if not @data
 
     if ["xml","document","source","data"].include?(sym)
+      fetch
       send(sym)
     elsif @data.has_key?(key)
       @data[key]

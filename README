@@ -1,0 +1,67 @@
+$Header$
+$Revision$
+$Author$
+
+linode-status
+=============
+
+SYNOPSIS
+--------
+
+Command-line Usage:
+
+  linode.py [username]
+
+  linode.rb [username]
+
+Library usage:
+
+  Python:
+
+    import linode
+    ...
+    info = linode.Info(username)
+    print info.xml, "Fetched by %s on %s" % (info.user, info.timestamp)
+
+  Ruby:
+
+    require 'linode'
+    ...
+    info = LinodeInfo.new(username).fetch
+    puts info.xml, "Fetched by #{info.user} on #{info.timestamp}"
+
+DESCRIPTION
+-----------
+
+These scripts are intended to be roughly the identical, at least in terms of
+functionality.  Some implementation differs, however:
+
+  - attempts were made to use only standard libraries. python's xpath was the
+    only failing in this.
+  - ruby's net libraries are more robust/elegant than python's.
+  - ruby's time/date parsing is more robust/intelligent than python's.
+  - other differences relating to __getattr__ (python) and method_missing
+    (ruby) functionality.
+
+The scripts accept a username as their first argument.  If none is given, they
+infer it from the $USER variable.  This username is the username used to
+identify yourself to Linode dashboard and/or lish shell; it is *not* related
+to any account on the hosted linode system.
+
+By design, the data is not fetched
+
+
+HISTORY
+-------
+
+These are ports from a perl script written by efudd <bw@broked.net> available
+here:
+
+    http://forever.broked.net/~jason/bw.pl.txt
+
+For more information about this Linode feature, see these forum threads:
+
+    http://www.linode.com/forums/viewtopic.php?t=776
+    http://www.linode.com/forums/viewtopic.php?t=1558
+
+Tim Hammerquist
