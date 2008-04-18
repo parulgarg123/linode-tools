@@ -1,10 +1,7 @@
-$Id$
-$Header$
-$Revision$
-$Author$
-
 linode-status
 =============
+Copyright 2008 Tim Hammerquist <penryu@gmail.com>
+
 
 SYNOPSIS
 --------
@@ -30,6 +27,7 @@ Library usage:
     ...
     info = LinodeInfo.new(username).fetch
     puts info.xml, "Fetched by #{info.user} on #{info.timestamp}"
+
 
 DESCRIPTION
 -----------
@@ -65,4 +63,3 @@ For more information about this Linode feature, see these forum threads:
     http://www.linode.com/forums/viewtopic.php?t=776
     http://www.linode.com/forums/viewtopic.php?t=1558
 
-Tim Hammerquist
