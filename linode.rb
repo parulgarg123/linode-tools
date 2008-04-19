@@ -92,11 +92,13 @@ class LinodeInfo
   end
 
   def _read_server
-    conn = URI.parse("#{@@base_url}?user=#{@user}")
+    url = "#{@@base_url}?user=#{@user}"
+    conn = URI.parse(url)
     xml = conn.read("User-Agent" => @user_agent)
     if xml.include?("<error>")
       err = REXML::Document.new(xml).elements["//error/text()"]
-      raise IOError, "invalid data returned by server: #{err}"
+      msg = "<url='#{url}' xml='#{xml}' error='#{err}'>"
+      raise IOError, "invalid data returned by server: #{msg}"
     else
       # write fresh data to statefile.
       open(@state,'w') {|f| f.write(xml)}
