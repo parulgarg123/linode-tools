@@ -116,12 +116,24 @@ class Info(object):
     self.document = minidom.parseString(self.xml).documentElement
     self.source = "file"
 
-if __name__ == "__main__":
-  from sys import argv
-  if len(argv) > 1:
-    user = argv[1]
+def main():
+  import sys
+  import optparse
+
+  parser = optparse.OptionParser(usage="%prog [options]")
+  parser.add_option("-f", "--force", help="force server request",
+      action="store_true", dest="force")
+  parser.add_option("-u", "--user", help="identify to server as USER",
+      type="string", action="store", dest="user")
+  (opts, args) = parser.parse_args()
+
+  if opts.user:
+    user = opts.user
   else:
     user = os.environ['USER']
-  info = Info(user)
+
+  info = Info(user).fetch(opts.force)
   print info.summary()
 
+if __name__ == "__main__":
+  main()

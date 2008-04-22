@@ -113,13 +113,26 @@ class LinodeInfo
   end
 end
 
-if $0 == __FILE__
-  if ARGV[0]
-    user = ARGV[0]
-  else
-    user = ENV["USER"]
-  end
-  info = LinodeInfo.new(user)
+def main
+  require 'optparse'
+  require 'ostruct'
+
+  opts = OpenStruct.new({'force' => false, 'user' => ENV["USER"]})
+
+  OptionParser.new do |parser|
+    parser.banner = "Usage: #$0 [options]"
+    parser.on("-f", "--force", "force server request") { |f|
+      opts.force = f
+    }
+    parser.on("-u", "--user USER", "identify to server as USER") { |u|
+      opts.user = u
+    }
+  end.parse!
+
+  info = LinodeInfo.new(opts.user).fetch(opts.force)
   puts info.summary
 end
 
+if $0 == __FILE__
+  main
+end
