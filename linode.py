@@ -11,7 +11,7 @@ class LinodeStatefileException(LinodeException): pass
 class LinodeStatefileOld(LinodeStatefileException): pass
 class LinodeInvalidResponse(LinodeException): pass
 
-class Info(object):
+class LinodeInfo(object):
 
   date_fmt = "%Y-%m-%d %H:%M:%S.00"
   max_age = 12 * 3600   # 12 hours
@@ -132,7 +132,7 @@ def main():
   else:
     user = os.environ['USER']
 
-  info = Info(user).fetch(opts.force)
+  info = LinodeInfo(user).fetch(opts.force)
   print info.summary()
 
 if __name__ == "__main__":
