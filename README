@@ -1,65 +1,123 @@
-linode-status
-=============
-Copyright 2008 Tim Hammerquist <penryu@gmail.com>
 
+NAME
+        linode-tools - scripts/libraries for use with Linode hosts/services
 
 SYNOPSIS
---------
+        Command-line Usage:
 
-Command-line Usage:
+            linode.py [-f] [-u linode_user]
 
-  linode.py [username]
+            linode.rb [-f] [-u linode_user]
 
-  linode.rb [username]
+        Library usage:
 
-Library usage:
+        Python:
+            import linode
+            ...
+            info = linode.LinodeInfo(username).fetch()
+            print info.fetch().xml, "Fetched by %s on %s"
+                % (info.user, info.timestamp)
 
-  Python:
-
-    import linode
-    ...
-    info = linode.Info(username)
-    print info.xml, "Fetched by %s on %s" % (info.user, info.timestamp)
-
-  Ruby:
-
-    require 'linode'
-    ...
-    info = LinodeInfo.new(username).fetch
-    puts info.xml, "Fetched by #{info.user} on #{info.timestamp}"
+        Ruby:
+            require 'linode'
+            ...
+            info = LinodeInfo.new(username).fetch
+            puts info.xml, "Fetched by #{info.user} on #{info.timestamp}"
 
 
 DESCRIPTION
------------
+        The LinodeInfo objects fetch, parse, and, summarize bandwidth/status
+        information returned in XML format by the following URI:
 
-These scripts are intended to be roughly the identical, at least in terms of
-functionality.  Some implementation differs, however:
+            http://www.linode.com/members/info/
 
-  - attempts were made to use only standard libraries. python's xpath was the
-    only failing in this.
-  - ruby's net libraries are more robust/elegant than python's.
-  - ruby's time/date parsing is more robust/intelligent than python's.
-  - other differences relating to __getattr__ (python) and method_missing
-    (ruby) functionality.
+        Currently, the library files are callable directly at the command line
+        and accept only to options:
 
-The scripts accept a username as their first argument.  If none is given, they
-infer it from the $USER variable.  This username is the username used to
-identify yourself to Linode dashboard and/or lish shell; it is *not* related
-to any account on the hosted linode system.
+            -f/--force
+                  Force a request for fresh data from the server, bypassing
+                  any statefile, even if it isn't stale (ie, is less than
+                  'max_age' seconds old).
 
-By design, the data is not fetched
+                  By default, the data is not fetched if the data in the
+                  statefile is less than 'max_age' seconds old.
+
+            -u/--user USERNAME
+                  Identify to the server as USERNAME. Only required if
+                  fetching data from the server. HOWEVER, if the statefile is
+                  stale and a fresh fetch is made, the script will not prompt
+                  for a username.
+
+                  If a username is not given as a script parameter, the script
+                  attempts to use the value of the $USER environment variable
+                  as a last resort.  Again, if no server request is made, this
+                  value is never used.
+
+        Note that This username is the username used to identify yourself to
+        Linode dashboard and/or lish shell; it is *not* related to any account
+        on the hosted linode system.
+
+
+NOTES
+        These scripts are intended to be roughly the identical, at least in
+        terms of functionality.  Some implementation differs, however:
+
+          - attempts were made to use only standard libraries. python's xpath
+            was the only failing in this.
+
+          - ruby's net libraries are more robust/elegant than python's.
+
+          - ruby's time/date parsing is more robust/intelligent than python's.
+
+          - other differences relating to __getattr__ (python) and
+            method_missing (ruby) functionality.
+
+
+INSTALLATION
+        The default install destination for the Makefile is in the executing
+        user's $HOME/bin/ directory.  However, these files may be simply
+        copied and placed anywhere the user wishes; there are no hard-coded
+        absolute paths.
+
+        To install (any of these):
+            make install
+
+        Or simply copy the files to the desired location:
+
+            cp linode.py $HOME/python/lib/
+
+            sudo cp linode.rb /usr/local/bin/
+
+
+FILES
+        linode.py       Python implementation of the library
+        linode.rb       Ruby implementation of the library
+
+
+BUGS
+        While efforts are made to keep the tool API as similar as possible
+        between implementations, some differences remain.
+
+
+TODO
+        Expand features as time and Linode service allow.
+
+        Document the scripts/API separately for sanity's sake.
 
 
 HISTORY
--------
+        These are ports from a perl script written by efudd <bw@broked.net>
+        and available here:
 
-These are ports from a perl script written by efudd <bw@broked.net> available
-here:
+            http://forever.broked.net/~jason/bw.pl.txt
 
-    http://forever.broked.net/~jason/bw.pl.txt
+        More information about this Linode feature:
 
-For more information about this Linode feature, see these forum threads:
+            http://www.linode.com/forums/viewtopic.php?t=776
+            http://www.linode.com/forums/viewtopic.php?t=1558
 
-    http://www.linode.com/forums/viewtopic.php?t=776
-    http://www.linode.com/forums/viewtopic.php?t=1558
+
+AUTHOR
+        Tim Hammerquist <peryu@gmail.com>
+
 
