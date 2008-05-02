@@ -62,8 +62,9 @@ NOTES
         These scripts are intended to be roughly the identical, at least in
         terms of functionality.  Some implementation differs, however:
 
-          - attempts were made to use only standard libraries. python's xpath
-            was the only failing in this.
+          - attempts were made to use only standard libraries. the python
+            script's dependency on 4Suite's XPath tools is the only known
+            failing in thie regard.
 
           - ruby's net libraries are more robust/elegant than python's.
 

@@ -3,8 +3,12 @@
 import os, time
 import urllib, urllib2
 from xml.dom import minidom
-from xml.xpath import Evaluate
-
+try:
+  from Ft.Xml.XPath import Evaluate
+except ImportError, err:
+  print "Please install the 4Suite Python XML tool suite"
+  print " ... or bug the author of this program to remove this dependency."
+  exit(1)
 
 class LinodeException(RuntimeError): pass
 class LinodeStatefileException(LinodeException): pass
