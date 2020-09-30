@@ -1,6 +1,10 @@
 
 NAME
-        linode-tools - scripts/libraries for use with Linode hosts/services
+        linode-tools
+
+DESCRIPTION
+
+        scripts/libraries for use with Linode hosts/services
 
 SYNOPSIS
         Command-line Usage:
